@@ -89,7 +89,7 @@ function quit(){
  * @returns {void}
  */
 function help(){
-  console.log('available command :\nhello\nquit')
+  console.log('available command :\nhello\nquit\nhello text')
   process.exit();
 }
 
