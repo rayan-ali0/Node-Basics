@@ -83,7 +83,7 @@ function quit(){
 }
 
 /**
- * help command
+ * a help command to list all the possible commands 
  *
  * @returns {void}
  */
