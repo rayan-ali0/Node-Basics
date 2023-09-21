@@ -10,5 +10,9 @@
     {
         "taskN": "Get sweets",
         "done": false
+    },
+    {
+        "taskN": "get tea",
+        "done": false
     }
 ]

@@ -1,4 +1,5 @@
 const fs = require('fs');
+var tasksList;
 
 /**
  * Starts the application
@@ -16,23 +17,24 @@ function startApp(name) {
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
+
+fs.readFile('./database.json','utf-8',(error,data)=>{
+if(error){
+  console.log(error);
+  return;
+}
+else{
+   try {
+    tasksList=JSON.parse(data);
+   }
+   catch(error){
+    console.log("Error parsing JSON ",error)
+   }
+}
+})
+
 }
 
-// fs.readFile('./database.json','utf-8',(error,data)=>{
-// if(error){
-//   console.log(error);
-//   return;
-// }
-// else{
-//    try {
-//     const data=JSON.parse(data);
-//     console.log(data[0]);
-//    }
-//    catch(error){
-//     console.log("Error parsing JSON ",error)
-//    }
-// }
-// })
 
 
 
@@ -86,24 +88,7 @@ function onDataReceived(text) {
   }
 
 }
-var tasksList = [{
-  taskN: "Get cheese", done: false
-}
-  ,
-{ taskN: "Get Milk", done: true }
-  ,
-{ taskN: "Get sweets", done: false }
-];
 
-
-fs.writeFile('./database.json', JSON.stringify(tasksList), (error) => {
-  if (error) {
-    console.log(error);
-  }
-  else {
-    console.log('File successfully written')
-  }
-})
 
 /**
  * prints "unknown command"
@@ -134,8 +119,18 @@ function hello(name) {
  * @returns {void}
  */
 function quit() {
-  console.log('Quitting now, goodbye!')
-  process.exit();
+  fs.writeFile('./database.json', JSON.stringify(tasksList), (error) => {
+    if (error) {
+      console.log("errorrrrrrrrrrrrrrrrr");
+    }
+    else {
+      console.log('File successfully written');
+      console.log('Quitting now, goodbye!')
+      process.exit();
+    }
+  })
+  
+
 }
 
 /**
