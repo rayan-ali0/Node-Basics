@@ -5,7 +5,8 @@ var tasksList;
 
 
 
-const enteredFile=process.argv.slice
+const enteredFile=process.argv.slice(2)
+if(enteredFile.length>0) {filename=enteredFile[0]};
 
 /**
  * 
