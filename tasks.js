@@ -105,11 +105,22 @@ function help(){
 }
 
 
-var tasksList=["node","JS","React"];
+// var tasksList=["Get cheese","Get Milk","Get sweets"];
+var tasksList=[{
+taskN:"Get cheese",done: false}
+,
+{taskN:"Get Milk",done:true}
+,
+{taskN:"Get sweets",done:false}
+];
+
 
 function list(){
   for(let i=0;i<tasksList.length;i++){
-    console.log((i+1)+" "+tasksList[i].trim())
+    if(tasksList[i].done===false){
+      console.log("[ ]"+ tasksList[i].taskN)
+    }
+    else {console.log(`[\u2713]`+tasksList[i].taskN)};
   }
 }
 
@@ -121,7 +132,11 @@ function list(){
 function add(task){
   task=task.trim();
   if(task==="") console.log("No task to be added");
-  else tasksList.push(task);
+  else {
+    let added={taskN:task,done:false};
+    tasksList.push(added)
+  }
+  
 }
 
 /**
@@ -131,10 +146,12 @@ function add(task){
  */
 function remove(taskNb){
   taskNb=taskNb.trim();
-  if(taskNb==="") tasksList.pop();
+  if(taskNb==="") {
+     tasksList.pop();
+    ;}
   else if(parseInt(taskNb)<=0 || parseInt(taskNb)>tasksList.length){
    console.log("Out of index")}
-  else tasksList.splice(parseInt(taskNb)-1,1);
+  else  tasksList.splice(parseInt(taskNb)-1,1);
 }
 /**
  *  
@@ -142,6 +159,7 @@ function remove(taskNb){
  * @returns {void}
  */
 function edit(task){
+  var keys=Object.keys(tasksList);
   task=task.trim();
   if(task==="") console.log("nothing to be edited");
    const [index,...text]=task.split(' ');
@@ -150,10 +168,13 @@ function edit(task){
   if(parseInt(index)<=0 || parseInt(index)>tasksList.length){    
     console.log("Out of index")
    }
-   else tasksList[parseInt(index)-1]=text.join(' ');
+   
+   else {
+   tasksList[parseInt(index)-1].taskN=text.join(' ');
+  }
  }
  else {
-  tasksList[tasksList.length-1]=task;
+  tasksList[tasksList.length-1].taskN=task;
 
  }
  
