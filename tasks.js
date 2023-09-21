@@ -44,7 +44,7 @@ function onDataReceived(text) {
   else if(text ==='help\n'){
     help();
   }
-  else if(text.split("")[0]=== "add"){
+  else if(text.slice(0,3)=== "add"){
      add(text.slice(3))
   }
   else if(text==='list\n'){
@@ -103,8 +103,8 @@ var tasksList=["node","JS","React"];
 
 function list(){
   for(let i=0;i<tasksList.length;i++){
-    console.log(i+1+" "+tasksList[i])
 
+    console.log(i+1+" "+tasksList[i].trim())
   }
 }
 /**
@@ -113,7 +113,9 @@ function list(){
  * @returns {void}
  */
 function add(task){
- tasksList.push(task);
+  task=task.trim();
+  if(task==="") console.log("No task to be added");
+  else tasksList.push(task);
 }
 
 
