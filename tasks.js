@@ -56,6 +56,12 @@ function onDataReceived(text) {
   else if(text.slice(0,4)==='edit'){
     edit(text.slice(4));
   }
+  else if(text.slice(0,5)==='check'){
+    check(text.slice(5));
+  }
+  else if(text.slice(0,7)==='uncheck'){
+    uncheck(text.slice(7));
+  }
   else {
     unknownCommand(text);
   }
@@ -153,6 +159,7 @@ function remove(taskNb){
    console.log("Out of index")}
   else  tasksList.splice(parseInt(taskNb)-1,1);
 }
+
 /**
  *  
  * edit tasks in the list
@@ -178,6 +185,44 @@ function edit(task){
 
  }
  
+}
+
+/**
+ *  
+ * remove a task in the list
+ * @returns {void}
+ */
+function check(task){
+  task=task.trim();
+  if(task==="") {
+console.log("Enter a valid task")    
+;}
+ else if(tasksList[Number(task)-1].done==true){
+
+console.log("Already checked");
+}
+else {
+  tasksList[Number(task)-1].done=true;
+  }
+}
+
+/**
+ *  
+ * remove a task in the list
+ * @returns {void}
+ */
+function uncheck(task){
+  task=task.trim();
+  if(task==="") {
+console.log("Enter a valid task")    
+;}
+ else if(tasksList[Number(task)-1].done==false){
+
+console.log("Already unChecked");
+}
+else {
+  tasksList[Number(task)-1].done=false;
+  }
 }
 
 // The following line starts the application
