@@ -107,7 +107,7 @@ function quit(){
  * @returns {void}
  */
 function help(){
-  console.log('available command :\nhello\nquit\nhello text\nadd\nremove') 
+  console.log('available command :\nhello\nquit\nhello text\nadd\nremove\nedit\ncheck\nuncheck') 
 }
 
 
