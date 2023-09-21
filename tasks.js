@@ -1,5 +1,17 @@
 const fs = require('fs');
+const process=require('process');
+let filename="./database.json";
 var tasksList;
+
+
+
+const enteredFile=process.argv.slice
+
+/**
+ * 
+ * T
+ * @returns {void}
+/
 
 /**
  * Starts the application
@@ -18,7 +30,7 @@ function startApp(name) {
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
 
-fs.readFile('./database.json','utf-8',(error,data)=>{
+fs.readFile(filename,'utf-8',(error,data)=>{
 if(error){
   console.log(error);
   return;
@@ -119,9 +131,9 @@ function hello(name) {
  * @returns {void}
  */
 function quit() {
-  fs.writeFile('./database.json', JSON.stringify(tasksList), (error) => {
+  fs.writeFile(filename, JSON.stringify(tasksList,null,2), (error) => {
     if (error) {
-      console.log("errorrrrrrrrrrrrrrrrr");
+      console.log(error);
     }
     else {
       console.log('File successfully written');

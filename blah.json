@@ -1,0 +1,22 @@
+[
+  {
+    "taskN": "cheese",
+    "done": false
+  },
+  {
+    "taskN": " Milk",
+    "done": true
+  },
+  {
+    "taskN": "sweets",
+    "done": false
+  },
+  {
+    "taskN": "tea",
+    "done": true
+  },
+  {
+    "taskN": "Salad",
+    "done": false
+  }
+]
