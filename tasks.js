@@ -50,6 +50,9 @@ function onDataReceived(text) {
   else if(text==='list\n'){
     list();
   }
+  else if(text.slice(0,6)==='remove'){
+    remove(text.slice(6));
+  }
   else {
     unknownCommand(text);
   }
@@ -107,6 +110,7 @@ function list(){
     console.log(i+1+" "+tasksList[i].trim())
   }
 }
+
 /**
  *  
  * add a new task in the list
@@ -118,7 +122,18 @@ function add(task){
   else tasksList.push(task);
 }
 
-
+/**
+ *  
+ * remove a task in the list
+ * @returns {void}
+ */
+function remove(taskNb){
+  taskNb=taskNb.trim();
+  if(taskNb==="") tasksList.pop();
+  else if(parseInt(taskNb)<=0 || parseInt(taskNb)>tasksList.length){
+   console.log("Out of index")}
+  else tasksList.splice(parseInt(taskNb)-1,1);
+}
 
 
 // The following line starts the application
