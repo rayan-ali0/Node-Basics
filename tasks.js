@@ -194,7 +194,9 @@ function edit(task){
  */
 function check(task){
   task=task.trim();
-  if(task==="") {
+  if(parseInt(task)<=0 || parseInt(task)>tasksList.length){
+    console.log("Out of index")}
+  else if(task==="") {
 console.log("Enter a valid task")    
 ;}
  else if(tasksList[Number(task)-1].done==true){
@@ -213,6 +215,8 @@ else {
  */
 function uncheck(task){
   task=task.trim();
+  if(parseInt(task)<=0 || parseInt(task)>tasksList.length){
+    console.log("Out of index")}
   if(task==="") {
 console.log("Enter a valid task")    
 ;}
