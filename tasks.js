@@ -98,7 +98,7 @@ function quit(){
  * @returns {void}
  */
 function help(){
-  console.log('available command :\nhello\nquit\nhello text') 
+  console.log('available command :\nhello\nquit\nhello text\nadd\nremove') 
 }
 
 
