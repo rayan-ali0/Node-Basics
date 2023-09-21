@@ -53,6 +53,9 @@ function onDataReceived(text) {
   else if(text.slice(0,6)==='remove'){
     remove(text.slice(6));
   }
+  else if(text.slice(0,4)==='edit'){
+    edit(text.slice(4));
+  }
   else {
     unknownCommand(text);
   }
@@ -106,8 +109,7 @@ var tasksList=["node","JS","React"];
 
 function list(){
   for(let i=0;i<tasksList.length;i++){
-
-    console.log(i+1+" "+tasksList[i].trim())
+    console.log((i+1)+" "+tasksList[i].trim())
   }
 }
 
@@ -134,7 +136,28 @@ function remove(taskNb){
    console.log("Out of index")}
   else tasksList.splice(parseInt(taskNb)-1,1);
 }
+/**
+ *  
+ * edit tasks in the list
+ * @returns {void}
+ */
+function edit(task){
+  task=task.trim();
+  if(task==="") console.log("nothing to be edited");
+   const [index,...text]=task.split(' ');
+  
+ if(!isNaN(index)){
+  if(parseInt(index)<=0 || parseInt(index)>tasksList.length){    
+    console.log("Out of index")
+   }
+   else tasksList[parseInt(index)-1]=text.join(' ');
+ }
+ else {
+  tasksList[tasksList.length-1]=task;
 
+ }
+ 
+}
 
 // The following line starts the application
 startApp("Rayan")
