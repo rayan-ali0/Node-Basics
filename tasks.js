@@ -44,6 +44,12 @@ function onDataReceived(text) {
   else if(text ==='help\n'){
     help();
   }
+  else if(text.split("")[0]=== "add"){
+     add(text.slice(3))
+  }
+  else if(text==='list\n'){
+    list();
+  }
   else {
     unknownCommand(text);
   }
@@ -91,6 +97,26 @@ function quit(){
 function help(){
   console.log('available command :\nhello\nquit\nhello text') 
 }
+
+
+var tasksList=["node","JS","React"];
+
+function list(){
+  for(let i=0;i<tasksList.length;i++){
+    console.log(tasksList[i])
+
+  }
+}
+/**
+ *  
+ * add a new task in the list
+ * @returns {void}
+ */
+function add(task){
+ tasksList.push(task);
+}
+
+
 
 
 // The following line starts the application
