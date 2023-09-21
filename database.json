@@ -1,0 +1,14 @@
+[
+    {
+        "taskN": "Get cheese",
+        "done": false
+    },
+    {
+        "taskN": "Get Milk",
+        "done": true
+    },
+    {
+        "taskN": "Get sweets",
+        "done": false
+    }
+]

@@ -1,3 +1,4 @@
+const fs = require('fs');
 
 /**
  * Starts the application
@@ -9,13 +10,31 @@
  * @param  {string} name the name of the app
  * @returns {void}
  */
-function startApp(name){
+function startApp(name) {
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
 }
+
+// fs.readFile('./database.json','utf-8',(error,data)=>{
+// if(error){
+//   console.log(error);
+//   return;
+// }
+// else{
+//    try {
+//     const data=JSON.parse(data);
+//     console.log(data[0]);
+//    }
+//    catch(error){
+//     console.log("Error parsing JSON ",error)
+//    }
+// }
+// })
+
+
 
 
 /**
@@ -34,32 +53,32 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
-  
-  if (text === 'quit\n' || text==='exit\n') {
+
+  if (text === 'quit\n' || text === 'exit\n') {
     quit();
   }
-  else if(text.slice(0,5)==='hello'){
+  else if (text.slice(0, 5) === 'hello') {
     hello(text.slice(5));
   }
-  else if(text ==='help\n'){
+  else if (text === 'help\n') {
     help();
   }
-  else if(text.slice(0,3)=== "add"){
-     add(text.slice(3))
+  else if (text.slice(0, 3) === "add") {
+    add(text.slice(3))
   }
-  else if(text==='list\n'){
+  else if (text === 'list\n') {
     list();
   }
-  else if(text.slice(0,6)==='remove'){
+  else if (text.slice(0, 6) === 'remove') {
     remove(text.slice(6));
   }
-  else if(text.slice(0,4)==='edit'){
+  else if (text.slice(0, 4) === 'edit') {
     edit(text.slice(4));
   }
-  else if(text.slice(0,5)==='check'){
+  else if (text.slice(0, 5) === 'check') {
     check(text.slice(5));
   }
-  else if(text.slice(0,7)==='uncheck'){
+  else if (text.slice(0, 7) === 'uncheck') {
     uncheck(text.slice(7));
   }
   else {
@@ -67,7 +86,24 @@ function onDataReceived(text) {
   }
 
 }
+var tasksList = [{
+  taskN: "Get cheese", done: false
+}
+  ,
+{ taskN: "Get Milk", done: true }
+  ,
+{ taskN: "Get sweets", done: false }
+];
 
+
+fs.writeFile('./database.json', JSON.stringify(tasksList), (error) => {
+  if (error) {
+    console.log(error);
+  }
+  else {
+    console.log('File successfully written')
+  }
+})
 
 /**
  * prints "unknown command"
@@ -76,8 +112,8 @@ function onDataReceived(text) {
  * @param  {string} c the text received
  * @returns {void}
  */
-function unknownCommand(c){
-  console.log('unknown command: "'+c.trim()+'"')
+function unknownCommand(c) {
+  console.log('unknown command: "' + c.trim() + '"')
 }
 
 
@@ -86,8 +122,9 @@ function unknownCommand(c){
  *
  * @returns {void}
  */
-function hello(name){
-  console.log(`${name?'hello'+name.replace("\n",''):'hello'}!`);
+function hello(name) {
+
+  console.log(`${name ? 'hello' + name.replace("\n", '') : 'hello'}!`);
 }
 
 
@@ -96,7 +133,7 @@ function hello(name){
  *
  * @returns {void}
  */
-function quit(){
+function quit() {
   console.log('Quitting now, goodbye!')
   process.exit();
 }
@@ -106,27 +143,18 @@ function quit(){
  *
  * @returns {void}
  */
-function help(){
-  console.log('available command :\nhello\nquit\nhello text\nadd\nremove\nedit\ncheck\nuncheck') 
+function help() {
+  console.log('available command :\nhello\nquit\nhello text\nadd\nremove\nedit\ncheck\nuncheck')
 }
 
 
-// var tasksList=["Get cheese","Get Milk","Get sweets"];
-var tasksList=[{
-taskN:"Get cheese",done: false}
-,
-{taskN:"Get Milk",done:true}
-,
-{taskN:"Get sweets",done:false}
-];
 
-
-function list(){
-  for(let i=0;i<tasksList.length;i++){
-    if(tasksList[i].done===false){
-      console.log("[ ]"+ tasksList[i].taskN)
+function list() {
+  for (let i = 0; i < tasksList.length; i++) {
+    if (tasksList[i].done === false) {
+      console.log("[ ]" + tasksList[i].taskN)
     }
-    else {console.log(`[\u2713]`+tasksList[i].taskN)};
+    else { console.log(`[\u2713]` + tasksList[i].taskN) };
   }
 }
 
@@ -135,14 +163,14 @@ function list(){
  * add a new task in the list
  * @returns {void}
  */
-function add(task){
-  task=task.trim();
-  if(task==="") console.log("No task to be added");
+function add(task) {
+  task = task.trim();
+  if (task === "") console.log("No task to be added");
   else {
-    let added={taskN:task,done:false};
+    let added = { taskN: task, done: false };
     tasksList.push(added)
   }
-  
+
 }
 
 /**
@@ -150,14 +178,16 @@ function add(task){
  * remove a task in the list
  * @returns {void}
  */
-function remove(taskNb){
-  taskNb=taskNb.trim();
-  if(taskNb==="") {
-     tasksList.pop();
-    ;}
-  else if(parseInt(taskNb)<=0 || parseInt(taskNb)>tasksList.length){
-   console.log("Out of index")}
-  else  tasksList.splice(parseInt(taskNb)-1,1);
+function remove(taskNb) {
+  taskNb = taskNb.trim();
+  if (taskNb === "") {
+    tasksList.pop();
+    ;
+  }
+  else if (parseInt(taskNb) <= 0 || parseInt(taskNb) > tasksList.length) {
+    console.log("Out of index")
+  }
+  else tasksList.splice(parseInt(taskNb) - 1, 1);
 }
 
 /**
@@ -165,46 +195,48 @@ function remove(taskNb){
  * edit tasks in the list
  * @returns {void}
  */
-function edit(task){
-  var keys=Object.keys(tasksList);
-  task=task.trim();
-  if(task==="") console.log("nothing to be edited");
-   const [index,...text]=task.split(' ');
-  
- if(!isNaN(index)){
-  if(parseInt(index)<=0 || parseInt(index)>tasksList.length){    
+function edit(task) {
+  var keys = Object.keys(tasksList);
+  task = task.trim();
+  if (task === "") console.log("nothing to be edited");
+  const [index, ...text] = task.split(' ');
+
+  if (!isNaN(index)) {
+    if (parseInt(index) <= 0 || parseInt(index) > tasksList.length) {
+      console.log("Out of index")
+    }
+
+    else {
+      tasksList[parseInt(index) - 1].taskN = text.join(' ');
+    }
+  }
+  else {
+    tasksList[tasksList.length - 1].taskN = task;
+
+  }
+
+}
+
+/**
+ *  
+ * remove a task in the list
+ * @returns {void}
+ */
+function check(task) {
+  task = task.trim();
+  if (parseInt(task) <= 0 || parseInt(task) > tasksList.length) {
     console.log("Out of index")
-   }
-   
-   else {
-   tasksList[parseInt(index)-1].taskN=text.join(' ');
   }
- }
- else {
-  tasksList[tasksList.length-1].taskN=task;
+  else if (task === "") {
+    console.log("Enter a valid task")
+      ;
+  }
+  else if (tasksList[Number(task) - 1].done == true) {
 
- }
- 
-}
-
-/**
- *  
- * remove a task in the list
- * @returns {void}
- */
-function check(task){
-  task=task.trim();
-  if(parseInt(task)<=0 || parseInt(task)>tasksList.length){
-    console.log("Out of index")}
-  else if(task==="") {
-console.log("Enter a valid task")    
-;}
- else if(tasksList[Number(task)-1].done==true){
-
-console.log("Already checked");
-}
-else {
-  tasksList[Number(task)-1].done=true;
+    console.log("Already checked");
+  }
+  else {
+    tasksList[Number(task) - 1].done = true;
   }
 }
 
@@ -213,19 +245,21 @@ else {
  * remove a task in the list
  * @returns {void}
  */
-function uncheck(task){
-  task=task.trim();
-  if(parseInt(task)<=0 || parseInt(task)>tasksList.length){
-    console.log("Out of index")}
-  if(task==="") {
-console.log("Enter a valid task")    
-;}
- else if(tasksList[Number(task)-1].done==false){
+function uncheck(task) {
+  task = task.trim();
+  if (parseInt(task) <= 0 || parseInt(task) > tasksList.length) {
+    console.log("Out of index")
+  }
+  else if (task === "") {
+    console.log("Enter a valid task")
+      ;
+  }
+  else if (tasksList[Number(task) - 1].done == false) {
 
-console.log("Already unChecked");
-}
-else {
-  tasksList[Number(task)-1].done=false;
+    console.log("Already unChecked");
+  }
+  else {
+    tasksList[Number(task) - 1].done = false;
   }
 }
 
