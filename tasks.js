@@ -5,7 +5,7 @@ var tasksList;
 
 
 
-const enteredFile=process.argv.slice(2)
+const enteredFile=process.argv.slice(2) // process.argv[2] without the condition below
 if(enteredFile.length>0) {filename=enteredFile[0]};
 
 /**
@@ -31,7 +31,7 @@ function startApp(name) {
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
 
-fs.readFile(filename,'utf-8',(error,data)=>{
+fs.readFileSync(filename,'utf-8',(error,data)=>{ // here also we have to use readFileSync
 if(error){
   console.log(error);
   return;
@@ -121,7 +121,8 @@ function unknownCommand(c) {
  * @returns {void}
  */
 function hello(name) {
-
+  // const var=name || " "
+  /*   This line check if I have the name it will take it if not . it will take " " as default value */
   console.log(`${name ? 'hello' + name.replace("\n", '') : 'hello'}!`);
 }
 
@@ -132,6 +133,8 @@ function hello(name) {
  * @returns {void}
  */
 function quit() {
+  // we can use writeFileSync in order to not quit before writing the data
+  // we can now put the process.exit() outide the else cond
   fs.writeFile(filename, JSON.stringify(tasksList,null,2), (error) => {
     if (error) {
       console.log(error);
@@ -153,6 +156,8 @@ function quit() {
  */
 function help() {
   console.log('available command :\nhello\nquit\nhello text\nadd\nremove\nedit\ncheck\nuncheck')
+  // we should have an array of object for each task : tasj name ad the description
+  //[{task:hello,desc:greeting}]
 }
 
 
@@ -178,7 +183,12 @@ function add(task) {
     let added = { taskN: task, done: false };
     tasksList.push(added)
   }
-
+/*
+* to use the class
+* in ES5:
+const task=require("./task.js")
+tasksList.push(new Task(task)) // the task is the  param
+*/
 }
 
 /**
@@ -190,7 +200,6 @@ function remove(taskNb) {
   taskNb = taskNb.trim();
   if (taskNb === "") {
     tasksList.pop();
-    ;
   }
   else if (parseInt(taskNb) <= 0 || parseInt(taskNb) > tasksList.length) {
     console.log("Out of index")
