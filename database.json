@@ -1,22 +1,6 @@
 [
   {
-    "taskN": "Get cheese",
+    "taskN": "new",
     "done": true
-  },
-  {
-    "taskN": "Get Milk",
-    "done": true
-  },
-  {
-    "taskN": "Get sweets",
-    "done": false
-  },
-  {
-    "taskN": "get tea",
-    "done": true
-  },
-  {
-    "taskN": "get Salad",
-    "done": false
   }
 ]

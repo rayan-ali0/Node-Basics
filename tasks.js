@@ -1,12 +1,38 @@
 const fs = require('fs');
-const process=require('process');
-let filename="./database.json";
-var tasksList;
+const process = require('process');
+let filename = "./database.json";
+var tasksList = [];
+
+
+fs.readFile(filename, 'utf-8', (error, data) => { // here also we have to use readFileSync
+  if (error) {
+    console.log(error);
+    return;
+  }
+  else {
+    try {
+      tasksList = JSON.parse(data);
+      console.log("ur data is here")
+      // dt = data
+
+      // console.log(data);
+    }
+    catch (error) {
+      console.log("Error parsing JSON ", error)
+    }
+  }
+})
+
+function clear(txt) {
+  if(txt.startsWith("clear")) {
+    console.clear()
+  }
+}
 
 
 
-const enteredFile=process.argv.slice(2) // process.argv[2] without the condition below
-if(enteredFile.length>0) {filename=enteredFile[0]};
+const enteredFile = process.argv.slice(2) // process.argv[2] without the condition below
+if (enteredFile.length > 0) { filename = enteredFile[0] };
 
 /**
  * 
@@ -30,22 +56,6 @@ function startApp(name) {
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
-
-fs.readFileSync(filename,'utf-8',(error,data)=>{ // here also we have to use readFileSync
-if(error){
-  console.log(error);
-  return;
-}
-else{
-   try {
-    tasksList=JSON.parse(data);
-   }
-   catch(error){
-    console.log("Error parsing JSON ",error)
-   }
-}
-})
-
 }
 
 
@@ -80,6 +90,9 @@ function onDataReceived(text) {
   }
   else if (text.slice(0, 3) === "add") {
     add(text.slice(3))
+  }
+  else if(text.startsWith("clear")){
+    clear(text)
   }
   else if (text === 'list\n') {
     list();
@@ -135,7 +148,7 @@ function hello(name) {
 function quit() {
   // we can use writeFileSync in order to not quit before writing the data
   // we can now put the process.exit() outide the else cond
-  fs.writeFile(filename, JSON.stringify(tasksList,null,2), (error) => {
+  fs.writeFile(filename, JSON.stringify(tasksList, null, 2), (error) => {
     if (error) {
       console.log(error);
     }
@@ -145,7 +158,7 @@ function quit() {
       process.exit();
     }
   })
-  
+
 
 }
 
@@ -183,12 +196,12 @@ function add(task) {
     let added = { taskN: task, done: false };
     tasksList.push(added)
   }
-/*
-* to use the class
-* in ES5:
-const task=require("./task.js")
-tasksList.push(new Task(task)) // the task is the  param
-*/
+  /*
+  * to use the class
+  * in ES5:
+  const task=require("./task.js")
+  tasksList.push(new Task(task)) // the task is the  param
+  */
 }
 
 /**
